@@ -6,15 +6,18 @@ public class PlayerController : MonoBehaviour
 {
 
     public float speed = 10;
+    public Transform camera;
     void FixedUpdate()
     {
         // 入力をxとzに代入
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        //float hInput = Input.GetAxis("Horizontal");
+        float vInput = Input.GetAxis("Vertical");
 
         Rigidbody rigidbody = GetComponent<Rigidbody>();
-        
-        // rigidbodyのx軸（黄）とz軸に力を加える
-        rigidbody.AddForce(x * 10,0, z * 10);
+
+        var forward = camera.forward;
+        Vector3 moveDirection = (forward - new Vector3(0, forward.y, 0));
+            
+        rigidbody.AddForce(moveDirection * speed * vInput);
     }
 }
